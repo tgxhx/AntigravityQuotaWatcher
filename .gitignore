@@ -10,6 +10,8 @@ out/
 dist/
 build/
 *.vsix
+*.zip
+*.rar
 
 # 测试
 .vscode-test/
