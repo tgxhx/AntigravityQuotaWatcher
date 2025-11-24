@@ -1,0 +1,123 @@
+{
+  "name": "antigravity-quota-watcher",
+  "displayName": "Antigravity Quota Watcher",
+  "description": "实时监控 Antigravity的模型使用配额",
+  "version": "0.5.1",
+  "publisher": "antigravity-tools",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity-quota-watcher.showQuota",
+        "title": "Antigravity: 显示配额详情"
+      },
+      {
+        "command": "antigravity-quota-watcher.refreshQuota",
+        "title": "Antigravity: 刷新配额"
+      },
+      {
+        "command": "antigravity-quota-watcher.detectPort",
+        "title": "Antigravity: 重新检测端口"
+      }
+    ],
+    "configuration": {
+      "title": "Antigravity Quota Watcher",
+      "properties": {
+        "antigravityQuotaWatcher.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用自动监控",
+          "order": 10
+        },
+        "antigravityQuotaWatcher.pollingInterval": {
+          "type": "number",
+          "default": 60,
+          "description": "轮询间隔（秒）",
+          "order": 20
+        },
+        "antigravityQuotaWatcher.displayStyle": {
+          "type": "string",
+          "default": "progressBar",
+          "enum": [
+            "percentage",
+            "progressBar"
+          ],
+          "enumDescriptions": [
+            "显示百分比 (例如: 🤖 Claude: 85%)",
+            "显示进度条 (例如: 🤖 Claude ███████░)"
+          ],
+          "description": "状态栏显示样式",
+          "order": 30
+        },
+        "antigravityQuotaWatcher.showPromptCredits": {
+          "type": "boolean",
+          "default": false,
+          "description": "在状态栏显示 Prompt Credits",
+          "order": 31
+        },
+        "antigravityQuotaWatcher.warningThreshold": {
+          "type": "number",
+          "default": 50,
+          "description": "警告阈值（百分比），低于此值状态栏显示橙色",
+          "order": 40
+        },
+        "antigravityQuotaWatcher.criticalThreshold": {
+          "type": "number",
+          "default": 30,
+          "description": "临界阈值（百分比），低于此值状态栏显示红色",
+          "order": 41
+        },
+        "antigravityQuotaWatcher.apiMethod": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "manual"
+          ],
+          "description": "API 调用方式:auto(自动检测)或 manual(手动配置)",
+          "order": 50
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "https": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antigravity-tools/antigravity-quota-watcher.git"
+  },
+  "keywords": [
+    "antigravity",
+    "quota",
+    "monitor",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT"
+}
