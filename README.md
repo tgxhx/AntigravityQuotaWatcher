@@ -1,6 +1,6 @@
 # Antigravity Quota Watcher
 
-### Choose Your Language: [English](./README.en.md) | [简体中文](./README.md)
+#### Choose Your Language:  简体中文 | [English](./README.en.md)
 
 >
 > 本插件为非官方工具，与 Antigravity 没有任何关联。
