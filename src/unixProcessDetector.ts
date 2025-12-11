@@ -8,6 +8,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as vscode from 'vscode';
 import { IPlatformStrategy } from './platformDetector';
+import { LocalizationService } from './i18n/localizationService';
 
 const execAsync = promisify(exec);
 
@@ -58,9 +59,10 @@ export class UnixProcessDetector implements IPlatformStrategy {
         console.log(`[UnixProcessDetector] Port command check: available=[${available.join(', ') || 'none'}], using=${this.availablePortCommand || 'none'}`);
 
         if (!this.availablePortCommand) {
+            const localizationService = LocalizationService.getInstance();
             const message = this.platform === 'darwin'
-                ? 'Port detection requires lsof or netstat. Please install one of them'
-                : 'Port detection requires lsof, ss, or netstat. Please install one of them';
+                ? localizationService.t('notify.portCommandRequiredDarwin')
+                : localizationService.t('notify.portCommandRequired');
 
             vscode.window.showErrorMessage(message, { modal: false });
             throw new Error('No port detection command available (lsof/ss/netstat)');

@@ -25,7 +25,23 @@ export type TranslationKey =
     // Messages
     | 'msg.portDetectionFailed'
     | 'msg.portDetectionSuccess'
-    | 'msg.quotaRefreshed';
+    | 'msg.quotaRefreshed'
+
+    // Notifications (vscode.window.show*Message)
+    | 'notify.unableToDetectProcess'
+    | 'notify.retry'
+    | 'notify.cancel'
+    | 'notify.refreshingQuota'
+    | 'notify.recheckingLogin'
+    | 'notify.detectingPort'
+    | 'notify.detectionSuccess'
+    | 'notify.unableToDetectPort'
+    | 'notify.unableToDetectPortHint1'
+    | 'notify.unableToDetectPortHint2'
+    | 'notify.portDetectionFailed'
+    | 'notify.configUpdated'
+    | 'notify.portCommandRequired'
+    | 'notify.portCommandRequiredDarwin';
 
 export interface TranslationMap {
     [key: string]: string;

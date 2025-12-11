@@ -10,6 +10,7 @@ import { PortDetectionService, PortDetectionResult } from './portDetectionServic
 import { Config, QuotaSnapshot } from './types';
 import { LocalizationService } from './i18n/localizationService';
 import { versionInfo } from './versionInfo';
+import { registerDevCommands } from './devTools';
 
 let quotaService: QuotaService | undefined;
 let statusBarService: StatusBarService | undefined;
@@ -79,11 +80,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
     // 显示用户提示,提供重试选项
     vscode.window.showWarningMessage(
-      'Antigravity Quota Watcher: Unable to detect the Antigravity process.',
-      'Retry',
-      'Cancel'
+      localizationService.t('notify.unableToDetectProcess'),
+      localizationService.t('notify.retry'),
+      localizationService.t('notify.cancel')
     ).then(action => {
-      if (action === 'Retry') {
+      if (action === localizationService.t('notify.retry')) {
         vscode.commands.executeCommand('antigravity-quota-watcher.detectPort');
       }
     });
@@ -176,7 +177,7 @@ export async function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      vscode.window.showInformationMessage('🔄 Refreshing quota...');
+      vscode.window.showInformationMessage(localizationService.t('notify.refreshingQuota'));
       config = configService!.getConfig();
       statusBarService?.setWarningThreshold(config.warningThreshold);
       statusBarService?.setCriticalThreshold(config.criticalThreshold);
@@ -207,7 +208,7 @@ export async function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      vscode.window.showInformationMessage('🔄 Rechecking login status...');
+      vscode.window.showInformationMessage(localizationService.t('notify.recheckingLogin'));
       statusBarService?.showFetching();
 
       // 立即触发一次配额获取，会自动检测登录状态
@@ -227,7 +228,8 @@ export async function activate(context: vscode.ExtensionContext) {
     'antigravity-quota-watcher.detectPort',
     async () => {
       console.log('[Extension] detectPort command invoked');
-      vscode.window.showInformationMessage('🔍 Detecting port again...');
+      // 使用状态栏显示检测状态，不弹窗
+      statusBarService?.showDetecting();
 
       config = configService!.getConfig();
       statusBarService?.setWarningThreshold(config.warningThreshold);
@@ -273,13 +275,13 @@ export async function activate(context: vscode.ExtensionContext) {
             : QuotaApiMethod.GET_USER_STATUS);
           quotaService.startPolling(config.pollingInterval);
 
-          vscode.window.showInformationMessage(`✅ Detection successful! Port: ${result.port}`);
+          vscode.window.showInformationMessage(localizationService.t('notify.detectionSuccess', { port: result.port }));
         } else {
           console.warn('[Extension] detectPort command did not return valid ports');
           vscode.window.showErrorMessage(
-            '❌ Unable to detect a valid port. Please ensure:\n' +
-            '1. Your Google account is signed in\n' +
-            '2. The system has permission to run the detection commands'
+            localizationService.t('notify.unableToDetectPort') + '\n' +
+            localizationService.t('notify.unableToDetectPortHint1') + '\n' +
+            localizationService.t('notify.unableToDetectPortHint2')
           );
         }
       } catch (error: any) {
@@ -288,7 +290,7 @@ export async function activate(context: vscode.ExtensionContext) {
         if (error?.stack) {
           console.error('Stack:', error.stack);
         }
-        vscode.window.showErrorMessage(`❌ Port detection failed: ${errorMsg}`);
+        vscode.window.showErrorMessage(localizationService.t('notify.portDetectionFailed', { error: errorMsg }));
       }
     }
   );
@@ -309,6 +311,9 @@ export async function activate(context: vscode.ExtensionContext) {
     { dispose: () => quotaService?.dispose() },
     { dispose: () => statusBarService?.dispose() }
   );
+
+  // 注册开发工具命令
+  registerDevCommands(context);
 
   // Startup log
   console.log('Antigravity Quota Watcher initialized');
@@ -351,7 +356,7 @@ function handleConfigChange(config: Config): void {
       statusBarService?.hide();
     }
 
-    vscode.window.showInformationMessage('Antigravity Quota Watcher config updated');
+    vscode.window.showInformationMessage(LocalizationService.getInstance().t('notify.configUpdated'));
   }, 300);
 }
 

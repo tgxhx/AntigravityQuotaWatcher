@@ -2,7 +2,7 @@
   "name": "antigravity-quota-watcher",
   "displayName": "Antigravity Quota Watcher",
   "description": "实时监控 Antigravity的模型使用配额",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "publisher": "antigravity-tools",
   "icon": "icon.png",
   "engines": {
@@ -28,6 +28,18 @@
       {
         "command": "antigravity-quota-watcher.detectPort",
         "title": "%command.detectPort%"
+      },
+      {
+        "command": "antigravity-quota-watcher.dev.previewNotifications",
+        "title": "Antigravity Dev: 预览通知弹窗"
+      },
+      {
+        "command": "antigravity-quota-watcher.dev.previewStatusBar",
+        "title": "Antigravity Dev: 预览状态栏文本"
+      },
+      {
+        "command": "antigravity-quota-watcher.dev.previewTooltip",
+        "title": "Antigravity Dev: 预览 Tooltip"
       }
     ],
     "configuration": {

@@ -6,7 +6,7 @@ export const en: TranslationMap = {
     'status.detecting': '🔍 Detecting port...',
     'status.fetching': '$(sync~spin) Fetching quota...',
     'status.retrying': '$(sync~spin) Retrying ({current}/{max})...',
-    'status.error': '$(error) Antigravity Quota: Error',
+    'status.error': '$(error) Antigravity Quota Watcher: Error',
     'status.notLoggedIn': '$(account) Not logged in',
     'status.refreshing': '$(sync~spin) Refreshing...',
 
@@ -24,8 +24,19 @@ export const en: TranslationMap = {
     'tooltip.clickToRetry': 'Click to retry',
     'tooltip.clickToRecheck': 'Click to recheck login status',
 
-    // Messages
-    'msg.portDetectionFailed': 'Antigravity Quota Watcher: Failed to detect port. Please ensure Antigravity is running.',
-    'msg.portDetectionSuccess': 'Antigravity Quota Watcher: Port detected successfully.',
-    'msg.quotaRefreshed': 'Antigravity quota refreshed.'
+    // Notifications (vscode.window.show*Message)
+    'notify.unableToDetectProcess': 'Antigravity Quota Watcher: Unable to detect the Antigravity process.',
+    'notify.retry': 'Retry',
+    'notify.cancel': 'Cancel',
+    'notify.refreshingQuota': '🔄 Refreshing quota...',
+    'notify.recheckingLogin': '🔄 Rechecking login status...',
+    'notify.detectingPort': '🔍 Detecting port again...',
+    'notify.detectionSuccess': '✅ Detection successful! Port: {port}',
+    'notify.unableToDetectPort': '❌ Unable to detect a valid port. Please ensure:',
+    'notify.unableToDetectPortHint1': '1. Your Google account is signed in',
+    'notify.unableToDetectPortHint2': '2. The system has permission to run the detection commands',
+    'notify.portDetectionFailed': '❌ Port detection failed: {error}',
+    'notify.configUpdated': 'Antigravity Quota Watcher config updated',
+    'notify.portCommandRequired': 'Port detection requires lsof, ss, or netstat. Please install one of them',
+    'notify.portCommandRequiredDarwin': 'Port detection requires lsof or netstat. Please install one of them'
 };
