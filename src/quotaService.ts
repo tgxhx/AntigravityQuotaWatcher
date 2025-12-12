@@ -56,7 +56,14 @@ async function makeRequest(
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => {
         if (res.statusCode !== 200) {
-          reject(new Error(`HTTP error: ${res.statusCode}`));
+          let errorDetail = '';
+          try {
+            const errorBody = JSON.parse(data);
+            errorDetail = errorBody.message || errorBody.error || JSON.stringify(errorBody);
+          } catch {
+            errorDetail = data || '(empty response)';
+          }
+          reject(new Error(`HTTP error: ${res.statusCode}, detail: ${errorDetail}`));
           return;
         }
         try {
