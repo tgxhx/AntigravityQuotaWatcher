@@ -21,6 +21,8 @@ export class ConfigService {
       apiMethod: (config.get<string>('apiMethod', 'GET_USER_STATUS') as Config['apiMethod']),
       showPromptCredits: config.get<boolean>('showPromptCredits', false),
       showPlanName: config.get<boolean>('showPlanName', false),
+      showGeminiPro: config.get<boolean>('showGeminiPro', true),
+      showGeminiFlash: config.get<boolean>('showGeminiFlash', true),
       displayStyle: (config.get<string>('displayStyle', 'progressBar') as Config['displayStyle']),
       language: (config.get<string>('language', 'auto') as Config['language'])
     };

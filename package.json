@@ -2,7 +2,7 @@
   "name": "antigravity-quota-watcher",
   "displayName": "Antigravity Quota Watcher",
   "description": "实时监控 Antigravity的模型使用配额",
-  "version": "0.7.8",
+  "version": "0.8.0",
   "publisher": "antigravity-tools",
   "icon": "icon.png",
   "engines": {
@@ -106,6 +106,18 @@
           "default": false,
           "description": "%config.showPlanName%",
           "order": 72
+        },
+        "antigravityQuotaWatcher.showGeminiPro": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.showGeminiPro%",
+          "order": 73
+        },
+        "antigravityQuotaWatcher.showGeminiFlash": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.showGeminiFlash%",
+          "order": 74
         },
         "antigravityQuotaWatcher.forcePowerShell": {
           "type": "boolean",

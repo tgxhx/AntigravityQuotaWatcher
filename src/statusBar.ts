@@ -12,6 +12,8 @@ export class StatusBarService {
   private criticalThreshold: number;
   private showPromptCredits: boolean;
   private showPlanName: boolean;
+  private showGeminiPro: boolean;
+  private showGeminiFlash: boolean;
   private displayStyle: 'percentage' | 'progressBar' | 'dots';
   private localizationService: LocalizationService;
 
@@ -24,6 +26,8 @@ export class StatusBarService {
     criticalThreshold: number = 30,
     showPromptCredits: boolean = false,
     showPlanName: boolean = false,
+    showGeminiPro: boolean = true,
+    showGeminiFlash: boolean = true,
     displayStyle: 'percentage' | 'progressBar' | 'dots' = 'progressBar'
   ) {
     this.localizationService = LocalizationService.getInstance();
@@ -36,6 +40,8 @@ export class StatusBarService {
     this.criticalThreshold = criticalThreshold;
     this.showPromptCredits = showPromptCredits;
     this.showPlanName = showPlanName;
+    this.showGeminiPro = showGeminiPro;
+    this.showGeminiFlash = showGeminiFlash;
     this.displayStyle = displayStyle;
   }
 
@@ -152,6 +158,14 @@ export class StatusBarService {
     this.showPlanName = value;
   }
 
+  setShowGeminiPro(value: boolean): void {
+    this.showGeminiPro = value;
+  }
+
+  setShowGeminiFlash(value: boolean): void {
+    this.showGeminiFlash = value;
+  }
+
   setDisplayStyle(value: 'percentage' | 'progressBar' | 'dots'): void {
     this.displayStyle = value;
   }
@@ -198,29 +212,39 @@ export class StatusBarService {
   private selectModelsToDisplay(models: ModelQuotaInfo[]): ModelQuotaInfo[] {
     const result: ModelQuotaInfo[] = [];
 
-    const proLow = models.find(model => this.isProLow(model.label));
-    if (proLow) {
-      result.push(proLow);
-    }
-
+    // 1. Claude (非 Thinking 版本) - 必须显示
     const claude = models.find(model => this.isClaudeWithoutThinking(model.label));
-    if (claude && claude !== proLow) {
+    if (claude) {
       result.push(claude);
     }
 
-    for (const model of models) {
-      if (result.length >= 2) break;
-      if (!result.includes(model)) {
-        result.push(model);
+    // 2. Gemini Pro (Low) - 根据配置决定是否显示
+    if (this.showGeminiPro) {
+      const proLow = models.find(model => this.isProLow(model.label));
+      if (proLow && !result.includes(proLow)) {
+        result.push(proLow);
       }
     }
 
-    return result.slice(0, 2);
+    // 3. Gemini Flash - 根据配置决定是否显示
+    if (this.showGeminiFlash) {
+      const flash = models.find(model => this.isGemini3Flash(model.label));
+      if (flash && !result.includes(flash)) {
+        result.push(flash);
+      }
+    }
+
+    return result;
   }
 
   private isProLow(label: string): boolean {
     const lower = label.toLowerCase();
     return lower.includes('pro') && lower.includes('low');
+  }
+
+  private isGemini3Flash(label: string): boolean {
+    const lower = label.toLowerCase();
+    return lower.includes('gemini') && lower.includes('flash');
   }
 
   private isClaudeWithoutThinking(label: string): boolean {
@@ -255,11 +279,13 @@ export class StatusBarService {
     if (label.includes('Claude')) {
       return 'Claude';
     }
-    if (label.includes('Flash')) {
-      return 'Flash';
+    // Gemini Flash 显示为 G Flash
+    if (label.includes('Gemini') && label.includes('Flash')) {
+      return 'G Flash';
     }
+    // Gemini Pro 显示为 G Pro
     if (label.includes('Pro (High)') || label.includes('Pro (Low)') || label.includes('Pro')) {
-      return 'Gemini';
+      return 'G Pro';
     }
     if (label.includes('GPT')) {
       return 'GPT';

@@ -78,6 +78,8 @@ export interface Config {
   apiMethod: ApiMethodPreference;
   showPromptCredits: boolean;
   showPlanName: boolean;
+  showGeminiPro: boolean;
+  showGeminiFlash: boolean;
   displayStyle: 'percentage' | 'progressBar' | 'dots';
   language: 'auto' | 'en' | 'zh-cn';
 }

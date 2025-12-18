@@ -45,6 +45,8 @@ export async function activate(context: vscode.ExtensionContext) {
     config.criticalThreshold,
     config.showPromptCredits,
     config.showPlanName,
+    config.showGeminiPro,
+    config.showGeminiFlash,
     config.displayStyle
   );
   // 显示检测状态
@@ -183,6 +185,8 @@ export async function activate(context: vscode.ExtensionContext) {
       statusBarService?.setCriticalThreshold(config.criticalThreshold);
       statusBarService?.setShowPromptCredits(config.showPromptCredits);
       statusBarService?.setShowPlanName(config.showPlanName);
+      statusBarService?.setShowGeminiPro(config.showGeminiPro);
+      statusBarService?.setShowGeminiFlash(config.showGeminiFlash);
       statusBarService?.setDisplayStyle(config.displayStyle);
       statusBarService?.showFetching();
 
@@ -209,6 +213,8 @@ export async function activate(context: vscode.ExtensionContext) {
       statusBarService?.setCriticalThreshold(config.criticalThreshold);
       statusBarService?.setShowPromptCredits(config.showPromptCredits);
       statusBarService?.setShowPlanName(config.showPlanName);
+      statusBarService?.setShowGeminiPro(config.showGeminiPro);
+      statusBarService?.setShowGeminiFlash(config.showGeminiFlash);
       statusBarService?.setDisplayStyle(config.displayStyle);
 
       try {
@@ -310,6 +316,8 @@ function handleConfigChange(config: Config): void {
     statusBarService?.setCriticalThreshold(config.criticalThreshold);
     statusBarService?.setShowPromptCredits(config.showPromptCredits);
     statusBarService?.setShowPlanName(config.showPlanName);
+    statusBarService?.setShowGeminiPro(config.showGeminiPro);
+    statusBarService?.setShowGeminiFlash(config.showGeminiFlash);
     statusBarService?.setDisplayStyle(config.displayStyle);
 
     // Update language

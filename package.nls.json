@@ -9,6 +9,8 @@
     "config.warningThreshold": "Warning threshold (%)",
     "config.criticalThreshold": "Critical threshold (%)",
     "config.showPlanName": "Show plan name in status bar (not officially enabled yet)",
+    "config.showGeminiPro": "Show Gemini Pro (G Pro) quota in status bar",
+    "config.showGeminiFlash": "Show Gemini Flash (G Flash) quota in status bar",
     "config.showPromptCredits": "Show Prompt Credits (not officially enabled yet)",
     "config.forcePowerShell": "Use PowerShell mode for process detection [Windows only, requires extension restart]",
     "config.language": "Language / 语言"
